@@ -2,6 +2,7 @@ use thiserror::Error;
 
 /// Main error type for the convcom application
 #[derive(Error, Debug)]
+#[allow(clippy::enum_variant_names)]
 pub enum ConvComError {
     /// Configuration related errors
     #[error("Configuration error: {0}")]

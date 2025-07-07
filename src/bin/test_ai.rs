@@ -29,7 +29,7 @@ MODIFIED: README.md
                         Ok(message) => {
                             println!("✅ AI Service working! Generated message:");
                             println!("---");
-                            println!("{}", message);
+                            println!("{message}");
                             println!("---");
 
                             // Test Git service if we're in a git repo
@@ -48,7 +48,7 @@ MODIFIED: README.md
                                                 let status = git_service
                                                     .get_file_status(file)
                                                     .unwrap_or('?');
-                                                println!("   - {} ({})", file, status);
+                                                println!("   - {file} ({status})");
                                             }
 
                                             match git_service.build_diff_content() {
@@ -58,38 +58,38 @@ MODIFIED: README.md
                                                         diff.len()
                                                     );
                                                     if diff.len() < 500 {
-                                                        println!("Diff preview:\n{}", diff);
+                                                        println!("Diff preview:\n{diff}");
                                                     }
                                                 }
                                                 Err(e) => {
-                                                    println!("⚠️  Could not build diff: {}", e)
+                                                    println!("⚠️  Could not build diff: {e}")
                                                 }
                                             }
                                         }
                                         Err(e) => {
-                                            println!("ℹ️  No staged files: {}", e);
+                                            println!("ℹ️  No staged files: {e}");
                                             println!("   (This is normal if nothing is staged)");
                                         }
                                     }
                                 }
                                 Err(e) => {
-                                    println!("⚠️  Git Service: {}", e);
+                                    println!("⚠️  Git Service: {e}");
                                     println!("   (This is normal if not in a git repository)");
                                 }
                             }
                         }
                         Err(e) => {
-                            println!("❌ AI Service call failed: {}", e);
+                            println!("❌ AI Service call failed: {e}");
                         }
                     }
                 }
                 Err(e) => {
-                    println!("❌ Failed to create AI Service: {}", e);
+                    println!("❌ Failed to create AI Service: {e}");
                 }
             }
         }
         Err(e) => {
-            println!("❌ Configuration error: {}", e);
+            println!("❌ Configuration error: {e}");
             println!("💡 Make sure to set GROQ_API_KEY environment variable");
             println!("   Or create ~/.config/conv_commit_ai/.env.commits with:");
             println!("   GROQ_API_KEY=your_key_here");

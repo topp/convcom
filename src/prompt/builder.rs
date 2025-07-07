@@ -54,8 +54,7 @@ impl PromptBuilder {
     fn build_focus_section(&self, focus_message: Option<&str>) -> String {
         match focus_message {
             Some(message) => format!(
-                "\n🚨 CRITICAL USER REQUIREMENT 🚨\n{}\n🚨 THIS MUST BE APPLIED TO YOUR OUTPUT 🚨\n\n",
-                message
+                "\n🚨 CRITICAL USER REQUIREMENT 🚨\n{message}\n🚨 THIS MUST BE APPLIED TO YOUR OUTPUT 🚨\n\n"
             ),
             None => String::new(),
         }
@@ -65,8 +64,7 @@ impl PromptBuilder {
     fn build_focus_reminder(&self, focus_message: Option<&str>) -> String {
         match focus_message {
             Some(message) => format!(
-                "\n\n🚨 REMINDER: APPLY THIS REQUIREMENT TO YOUR COMMIT MESSAGE 🚨\n{}\n🚨 THIS IS MANDATORY - DO NOT IGNORE 🚨",
-                message
+                "\n\n🚨 REMINDER: APPLY THIS REQUIREMENT TO YOUR COMMIT MESSAGE 🚨\n{message}\n🚨 THIS IS MANDATORY - DO NOT IGNORE 🚨"
             ),
             None => String::new(),
         }

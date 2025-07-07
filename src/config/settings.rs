@@ -18,7 +18,7 @@ impl Config {
 
         if env_file.exists() {
             dotenvy::from_path(&env_file).map_err(|e| {
-                ConvComError::ConfigError(format!("Failed to load config file: {}", e))
+                ConvComError::ConfigError(format!("Failed to load config file: {e}"))
             })?;
         }
 

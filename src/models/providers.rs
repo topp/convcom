@@ -1,21 +1,16 @@
 use std::fmt;
 
 /// AI Provider selection
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, clap::ValueEnum)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, clap::ValueEnum, Default)]
 pub enum AiProvider {
     /// Groq (default)
     #[value(name = "groq")]
+    #[default]
     Groq,
 
     /// Anthropic Claude
     #[value(name = "anthropic")]
     Anthropic,
-}
-
-impl Default for AiProvider {
-    fn default() -> Self {
-        AiProvider::Groq
-    }
 }
 
 impl fmt::Display for AiProvider {
@@ -28,7 +23,7 @@ impl fmt::Display for AiProvider {
 }
 
 /// Available AI models across all providers
-#[derive(Debug, Clone, Copy, PartialEq, Eq, clap::ValueEnum)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, clap::ValueEnum, Default)]
 pub enum ModelName {
     // Groq Models
     /// Allam 2 7B model (Groq)
@@ -57,6 +52,7 @@ pub enum ModelName {
 
     /// Llama 3.3 70B Versatile model (Groq) (default)
     #[value(name = "llama-3.3-70b-versatile")]
+    #[default]
     Llama3370BVersatile,
 
     /// Llama3 70B 8192 context model (Groq)
@@ -188,12 +184,6 @@ impl ModelName {
             | ModelName::Claude3Sonnet
             | ModelName::Claude3Haiku => AiProvider::Anthropic,
         }
-    }
-}
-
-impl Default for ModelName {
-    fn default() -> Self {
-        ModelName::Llama3370BVersatile
     }
 }
 

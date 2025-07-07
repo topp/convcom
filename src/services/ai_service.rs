@@ -50,8 +50,7 @@ impl AiService {
 
         let provider = self.providers.get(&provider_type).ok_or_else(|| {
             ConvComError::ConfigError(format!(
-                "Provider {} is not configured. Please provide API key for this provider.",
-                provider_type
+                "Provider {provider_type} is not configured. Please provide API key for this provider."
             ))
         })?;
 

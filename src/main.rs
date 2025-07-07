@@ -34,7 +34,7 @@ async fn main() -> Result<()> {
     let config = match Config::load() {
         Ok(config) => config,
         Err(e) => {
-            eprintln!("Configuration error: {}", e);
+            eprintln!("Configuration error: {e}");
             eprintln!();
             eprintln!("Please set your GROQ_API_KEY:");
             eprintln!("1. Get a free API key from: https://console.groq.com");
@@ -48,7 +48,7 @@ async fn main() -> Result<()> {
     let ai_service = match AiService::new(config.groq_api_key, config.anthropic_api_key) {
         Ok(service) => service,
         Err(e) => {
-            eprintln!("AI service initialization error: {}", e);
+            eprintln!("AI service initialization error: {e}");
             eprintln!();
             eprintln!("Please configure at least one AI provider:");
             eprintln!("1. Groq: Set GROQ_API_KEY (get free key from console.groq.com)");
@@ -78,7 +78,7 @@ async fn main() -> Result<()> {
     let git_service = match GitService::new() {
         Ok(service) => service,
         Err(e) => {
-            eprintln!("Git error: {}", e);
+            eprintln!("Git error: {e}");
             eprintln!("Make sure you're in a git repository with staged changes.");
             std::process::exit(1);
         }
@@ -94,7 +94,7 @@ async fn main() -> Result<()> {
             content
         }
         Err(e) => {
-            eprintln!("Error getting git diff: {}", e);
+            eprintln!("Error getting git diff: {e}");
             std::process::exit(1);
         }
     };
@@ -103,7 +103,7 @@ async fn main() -> Result<()> {
     let prompt_builder = match PromptBuilder::new() {
         Ok(builder) => builder,
         Err(e) => {
-            eprintln!("Template error: {}", e);
+            eprintln!("Template error: {e}");
             std::process::exit(1);
         }
     };
@@ -112,7 +112,7 @@ async fn main() -> Result<()> {
     let prompt = match prompt_builder.build_prompt(&diff_content, cli.focus.as_deref()) {
         Ok(prompt) => prompt,
         Err(e) => {
-            eprintln!("Error building prompt: {}", e);
+            eprintln!("Error building prompt: {e}");
             std::process::exit(1);
         }
     };
@@ -120,10 +120,10 @@ async fn main() -> Result<()> {
     // Generate commit message (silently for clean output)
     match ai_service.generate_commit_message(prompt, cli.model).await {
         Ok(commit_message) => {
-            println!("{}", commit_message);
+            println!("{commit_message}");
         }
         Err(e) => {
-            eprintln!("Error generating commit message: {}", e);
+            eprintln!("Error generating commit message: {e}");
             std::process::exit(1);
         }
     }

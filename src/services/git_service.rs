@@ -75,9 +75,8 @@ impl GitService {
         }
 
         // Fallback: try to read from working directory
-        std::fs::read_to_string(file_path).map_err(|_| {
-            ConvComError::IoError(format!("Could not read file content: {}", file_path))
-        })
+        std::fs::read_to_string(file_path)
+            .map_err(|_| ConvComError::IoError(format!("Could not read file content: {file_path}")))
     }
 
     /// Extract changes from a modified file using git diff
@@ -126,7 +125,7 @@ impl GitService {
         match file_status {
             'A' => {
                 // Added file
-                changes.push(format!("NEW FILE: {}", file_path));
+                changes.push(format!("NEW FILE: {file_path}"));
                 match self.get_file_content(file_path) {
                     Ok(content) => {
                         changes.push("COMPLETE CONTENT:".to_string());
@@ -141,26 +140,26 @@ impl GitService {
             }
             'D' => {
                 // Deleted file
-                changes.push(format!("DELETED: {}", file_path));
+                changes.push(format!("DELETED: {file_path}"));
             }
             'M' => {
                 // Modified file
                 match self.get_file_changes(file_path) {
                     Ok(file_changes) => {
                         if !file_changes.is_empty() {
-                            changes.push(format!("MODIFIED: {}", file_path));
+                            changes.push(format!("MODIFIED: {file_path}"));
                             changes.extend(file_changes.into_iter().take(100)); // Limit to 100 changes
                             changes.push(String::new());
                         }
                     }
                     Err(_) => {
-                        changes.push(format!("MODIFIED: {} (could not get diff)", file_path));
+                        changes.push(format!("MODIFIED: {file_path} (could not get diff)"));
                         changes.push(String::new());
                     }
                 }
             }
             _ => {
-                changes.push(format!("UNKNOWN STATUS: {}", file_path));
+                changes.push(format!("UNKNOWN STATUS: {file_path}"));
             }
         }
 
@@ -192,14 +191,12 @@ mod tests {
         match GitService::new() {
             Ok(_) => {
                 // Successfully created in a git repo
-                assert!(true);
             }
             Err(ConvComError::NotGitRepoError) => {
                 // Expected when not in a git repo
-                assert!(true);
             }
             Err(e) => {
-                panic!("Unexpected error: {}", e);
+                panic!("Unexpected error: {e}");
             }
         }
     }

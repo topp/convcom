@@ -89,8 +89,7 @@ impl AiProviderTrait for GroqProvider {
     async fn generate_message(&self, prompt: String, model: ModelName) -> Result<String> {
         if model.provider() != AiProvider::Groq {
             return Err(ConvComError::ConfigError(format!(
-                "Model {} is not supported by Groq provider",
-                model
+                "Model {model} is not supported by Groq provider"
             )));
         }
 
@@ -199,8 +198,7 @@ impl AiProviderTrait for AnthropicProvider {
     async fn generate_message(&self, prompt: String, model: ModelName) -> Result<String> {
         if model.provider() != AiProvider::Anthropic {
             return Err(ConvComError::ConfigError(format!(
-                "Model {} is not supported by Anthropic provider",
-                model
+                "Model {model} is not supported by Anthropic provider"
             )));
         }
 
