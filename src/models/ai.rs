@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use crate::models::providers::ModelName;
 
 /// Chat message for the API request
 #[derive(Debug, Serialize)]
