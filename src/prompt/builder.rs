@@ -73,12 +73,6 @@ impl PromptBuilder {
     }
 }
 
-impl Default for PromptBuilder {
-    fn default() -> Self {
-        Self::new().expect("Failed to create PromptBuilder")
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
