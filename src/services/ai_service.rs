@@ -35,6 +35,7 @@ impl AiService {
     }
 
     /// Create a new AI service instance with Groq only (backward compatibility)
+    #[allow(dead_code)]
     pub fn new_groq_only(api_key: String) -> Result<Self> {
         Self::new(Some(api_key), None)
     }
@@ -63,6 +64,7 @@ impl AiService {
     }
 
     /// Get models available for configured providers
+    #[allow(dead_code)]
     pub fn available_models(&self) -> Vec<ModelName> {
         let mut models = Vec::new();
         
@@ -81,7 +83,7 @@ impl AiService {
                         ModelName::Llama38B8192,
                         ModelName::MetaLlama4Maverick17B128E,
                         ModelName::MetaLlama4Scout17B16E,
-                        ModelName::MetaLlama4Maverick17B128E,
+                        ModelName::MetaLlamaGuard412B,
                         ModelName::MetaLlamaPromptGuard222M,
                         ModelName::MetaLlamaPromptGuard286M,
                         ModelName::MistralSaba24B,
