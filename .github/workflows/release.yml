@@ -1,0 +1,151 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags like v1.0.0, v0.1.2, etc.
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    name: Build for ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            binary_name: convcom
+            asset_name: convcom-linux-x86_64
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            binary_name: convcom.exe
+            asset_name: convcom-windows-x86_64.exe
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            binary_name: convcom
+            asset_name: convcom-macos-x86_64
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            binary_name: convcom
+            asset_name: convcom-macos-aarch64
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.target }}
+
+      - name: Build binary
+        run: cargo build --release --target ${{ matrix.target }}
+
+      - name: Prepare binary
+        shell: bash
+        run: |
+          cd target/${{ matrix.target }}/release
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            7z a ../../../${{ matrix.asset_name }}.zip ${{ matrix.binary_name }}
+          else
+            tar czvf ../../../${{ matrix.asset_name }}.tar.gz ${{ matrix.binary_name }}
+          fi
+          cd -
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset_name }}
+          path: |
+            ${{ matrix.asset_name }}.tar.gz
+            ${{ matrix.asset_name }}.zip
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ConvCom ${{ github.ref_name }}
+          body: |
+            ## 🚀 ConvCom Release ${{ github.ref_name }}
+            
+            AI-powered conventional commit message generator written in Rust.
+            
+            ## 📦 Installation Options
+            
+            ### Quick Install (Recommended)
+            Choose the appropriate binary for your platform:
+            
+            - **🐧 Linux**: `convcom-linux-x86_64.tar.gz`
+            - **🪟 Windows**: `convcom-windows-x86_64.exe.zip`
+            - **🍎 macOS (Intel)**: `convcom-macos-x86_64.tar.gz`
+            - **🍎 macOS (Apple Silicon)**: `convcom-macos-aarch64.tar.gz`
+            
+            ### Installation Steps
+            
+            **Linux/macOS:**
+            ```bash
+            # Download and extract
+            tar -xzf convcom-*.tar.gz
+            
+            # Make executable and move to PATH
+            chmod +x convcom
+            sudo mv convcom /usr/local/bin/
+            
+            # Verify installation
+            convcom --help
+            ```
+            
+            **Windows:**
+            ```powershell
+            # Extract the zip file
+            # Move convcom.exe to a folder in your PATH
+            # Or run directly from the extracted location
+            ```
+            
+            ## ⚡ Quick Start
+            
+            ```bash
+            # Set up your API key (choose one)
+            export GROQ_API_KEY="your_groq_api_key"        # Recommended
+            export ANTHROPIC_API_KEY="your_anthropic_key"  # Premium option
+            
+            # Stage your changes and generate commit message
+            git add .
+            convcom
+            ```
+            
+            ## 🔗 Links
+            
+            - **📖 Full Documentation**: [README.md](https://github.com/${{ github.repository }}/blob/main/README.md)
+            - **⚙️ Installation Guide**: [INSTALLATION.md](https://github.com/${{ github.repository }}/blob/main/INSTALLATION.md)
+            - **🐛 Report Issues**: [GitHub Issues](https://github.com/${{ github.repository }}/issues)
+            
+            ---
+            
+            **What's Changed:**
+            See the commit history for detailed changes in this release.
+          files: |
+            artifacts/**/*.tar.gz
+            artifacts/**/*.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

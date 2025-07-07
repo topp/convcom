@@ -27,6 +27,8 @@ cargo install --path .
 
 **👉 For detailed installation options, see [INSTALLATION.md](INSTALLATION.md)**
 
+**⚡ Quick Install**: Download pre-compiled binaries from our [Releases page](https://github.com/topp/convcom/releases) - no Rust required!
+
 ### 2. Configuration
 
 ```bash
