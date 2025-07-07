@@ -1,6 +1,6 @@
 use crate::error::{ConvComError, Result};
 use crate::models::providers::{AiProvider, ModelName};
-use crate::services::providers::{create_provider, AiProviderTrait};
+use crate::services::providers::{AiProviderTrait, create_provider};
 use anyhow::Result as AnyhowResult;
 
 /// AI service for generating commit messages using multiple providers

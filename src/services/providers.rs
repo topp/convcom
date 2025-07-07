@@ -4,7 +4,7 @@ use crate::models::providers::{AiProvider, ModelName};
 use async_trait::async_trait;
 use regex::Regex;
 use reqwest::Client;
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 use std::time::Duration;
 
 /// Trait for AI providers
