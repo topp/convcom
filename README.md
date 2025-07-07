@@ -12,6 +12,8 @@ A **Rust-based AI-powered conventional commit message generator** that automatic
 - **📝 Comprehensive Output**: Provides structured commit messages with bullet-point summaries
 - **⚡ Fast & Efficient**: Native Rust performance with async HTTP client
 
+> **⭐ Quick Recommendation**: For the best experience, use the default `llama-3.3-70b-versatile` model via Groq - it provides excellent quality and speed at no cost with their generous free tier!
+
 ## 🚀 Quick Start
 
 ### 1. Installation
@@ -70,12 +72,13 @@ feat(api): add user authentication system
 ## 🎛️ Advanced Usage
 
 ```bash
-# Groq models (fast, cost-effective)
-convcom --model llama-3.3-70b-versatile    # Default, excellent quality
+# Groq models (fast, cost-effective) - RECOMMENDED
+convcom --model llama-3.3-70b-versatile    # Default, excellent quality & speed ⭐
 convcom --model llama-3.1-8b-instant       # Fastest
 convcom --model qwen-qwq-32b               # Best reasoning
 
 # Anthropic models (premium quality)
+convcom --model claude-sonnet-4-20250514   # Latest Claude 4 Sonnet
 convcom --model claude-3-5-sonnet-20241022 # Top-tier reasoning
 convcom --model claude-3-5-haiku-20241022  # Fast Claude model
 convcom --model claude-3-opus-20240229     # Maximum capability
@@ -93,16 +96,21 @@ convcom --model claude-3-5-sonnet-20241022 # Claude perspective
 
 ConvCom supports multiple AI providers for maximum flexibility:
 
-### Groq (Fast & Affordable)
+### Groq (Fast & Affordable) - **⭐ HIGHLY RECOMMENDED**
 - **Models**: Llama 3.3 70B, Llama 3.1 8B, Gemma2 9B, Qwen QWQ 32B, and more
-- **Speed**: Very fast inference
+- **⚡ Default Model**: `llama-3.3-70b-versatile` - **Optimal balance of quality and speed**
+- **Speed**: Very fast inference with excellent performance
 - **Cost**: Generous free tier, low cost
+- **Quality**: Exceptional results for commit message generation
 - **Setup**: `export GROQ_API_KEY="your_key_here"`
 
+> **💡 Recommendation**: The default Llama 3.3 70B Versatile model via Groq provides the best combination of speed, quality, and cost-effectiveness for commit message generation. Highly recommended for daily use!
+
 ### Anthropic Claude (Premium Quality)  
-- **Models**: Claude 3.5 Sonnet, Claude 3.5 Haiku, Claude 3 Opus
+- **Models**: Claude 4 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku, Claude 3 Opus
 - **Quality**: Exceptional reasoning and code understanding
-- **Features**: Advanced thinking capabilities
+- **Features**: Advanced thinking capabilities, state-of-the-art performance
+- **Latest**: Claude 4 Sonnet offers the most advanced AI capabilities
 - **Setup**: `export ANTHROPIC_API_KEY="your_key_here"`
 
 ### Mixed Provider Usage
@@ -112,8 +120,8 @@ export GROQ_API_KEY="your_groq_key"
 export ANTHROPIC_API_KEY="your_anthropic_key"
 
 # Choose specific models
-convcom --model llama-3.3-70b-versatile    # Groq
-convcom --model claude-3-5-sonnet-20241022  # Anthropic
+convcom --model llama-3.3-70b-versatile    # Groq (recommended)
+convcom --model claude-sonnet-4-20250514   # Latest Claude 4 Sonnet
 ```
 
 ## 💡 Integration Ideas
