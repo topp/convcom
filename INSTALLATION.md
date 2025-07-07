@@ -32,15 +32,15 @@ convcom --help
 cargo install --git <repository-url>
 ```
 
-### Option 3: Download Pre-compiled Binaries ⭐ **EASIEST**
+### Option 3: Download Pre-compiled Binaries **EASIEST**
 
 **Quick and easy installation without Rust toolchain required!**
 
 1. **Download**: Go to the [Releases page](https://github.com/topp/convcom/releases) and download the appropriate binary:
-   - **🐧 Linux**: `convcom-linux-x86_64.tar.gz`
-   - **🪟 Windows**: `convcom-windows-x86_64.exe.zip`
-   - **🍎 macOS (Intel)**: `convcom-macos-x86_64.tar.gz`
-   - **🍎 macOS (Apple Silicon)**: `convcom-macos-aarch64.tar.gz`
+   - **Linux**: `convcom-linux-x86_64.tar.gz`
+   - **Windows**: `convcom-windows-x86_64.exe.zip`
+   - **macOS (Intel)**: `convcom-macos-x86_64.tar.gz`
+   - **macOS (Apple Silicon)**: `convcom-macos-aarch64.tar.gz`
 
 2. **Extract and Install**:
 
@@ -73,7 +73,7 @@ cargo install --git <repository-url>
    convcom --help
    ```
 
-> **💡 Tip**: This method is perfect if you just want to use ConvCom without setting up the Rust development environment!
+> **Tip**: This method is perfect if you just want to use ConvCom without setting up the Rust development environment!
 
 ### Option 4: Build and Run Locally
 

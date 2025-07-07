@@ -2,19 +2,19 @@
 
 A **Rust-based AI-powered conventional commit message generator** that automatically creates high-quality commit messages based on your staged Git changes using Groq's advanced language models.
 
-## ✨ Features
+## Features
 
-- **🤖 AI-Powered Analysis**: Uses Groq's advanced language models to understand your code changes
-- **📋 Conventional Commits**: Generates messages following the [Conventional Commits v1.0.0](https://www.conventionalcommits.org/) specification
-- **🎯 Multiple Models**: Support for various Groq models including Llama, Gemma, Qwen, and more
-- **🔍 Smart Git Integration**: Analyzes real git repositories and staged changes
-- **🎛️ Focus Mode**: Use the `--focus` option to guide the AI's attention to specific aspects
-- **📝 Comprehensive Output**: Provides structured commit messages with bullet-point summaries
-- **⚡ Fast & Efficient**: Native Rust performance with async HTTP client
+- **AI-Powered Analysis**: Uses Groq's advanced language models to understand your code changes
+- **Conventional Commits**: Generates messages following the [Conventional Commits v1.0.0](https://www.conventionalcommits.org/) specification
+- **Multiple Models**: Support for various Groq models including Llama, Gemma, Qwen, and more
+- **Smart Git Integration**: Analyzes real git repositories and staged changes
+- **Focus Mode**: Use the `--focus` option to guide the AI's attention to specific aspects
+- **Comprehensive Output**: Provides structured commit messages with bullet-point summaries
+- **Fast & Efficient**: Native Rust performance with async HTTP client
 
-> **⭐ Quick Recommendation**: For the best experience, use the default `llama-3.3-70b-versatile` model via Groq - it provides excellent quality and speed at no cost with their generous free tier!
+> **Quick Recommendation**: For the best experience, use the default `llama-3.3-70b-versatile` model via Groq - it provides excellent quality and speed. Note that Groq has usage limits on their free tier - check [their limits page](https://console.groq.com/dashboard/limits) for details.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Installation
 
@@ -25,9 +25,9 @@ cd convcom
 cargo install --path .
 ```
 
-**👉 For detailed installation options, see [INSTALLATION.md](INSTALLATION.md)**
+**For detailed installation options, see [INSTALLATION.md](INSTALLATION.md)**
 
-**⚡ Quick Install**: Download pre-compiled binaries from our [Releases page](https://github.com/topp/convcom/releases) - no Rust required!
+**Quick Install**: Download pre-compiled binaries from our [Releases page](https://github.com/topp/convcom/releases) - no Rust required!
 
 ### 2. Configuration
 
@@ -56,7 +56,7 @@ convcom
 git commit -m "$(convcom)"
 ```
 
-## 📖 Example Output
+## Example Output
 
 For a typical code change, the tool generates structured commit messages like:
 
@@ -71,11 +71,11 @@ feat(api): add user authentication system
 * Include session management with configurable expiration times
 ```
 
-## 🎛️ Advanced Usage
+## Advanced Usage
 
 ```bash
 # Groq models (fast, cost-effective) - RECOMMENDED
-convcom --model llama-3.3-70b-versatile    # Default, excellent quality & speed ⭐
+convcom --model llama-3.3-70b-versatile    # Default, excellent quality & speed
 convcom --model llama-3.1-8b-instant       # Fastest
 convcom --model qwen-qwq-32b               # Best reasoning
 
@@ -94,19 +94,19 @@ convcom --model llama-3.3-70b-versatile    # Groq perspective
 convcom --model claude-3-5-sonnet-20241022 # Claude perspective
 ```
 
-## 🤖 AI Provider Support
+## AI Provider Support
 
 ConvCom supports multiple AI providers for maximum flexibility:
 
-### Groq (Fast & Affordable) - **⭐ HIGHLY RECOMMENDED**
+### Groq (Fast & Affordable) - **HIGHLY RECOMMENDED**
 - **Models**: Llama 3.3 70B, Llama 3.1 8B, Gemma2 9B, Qwen QWQ 32B, and more
-- **⚡ Default Model**: `llama-3.3-70b-versatile` - **Optimal balance of quality and speed**
+- **Default Model**: `llama-3.3-70b-versatile` - **Optimal balance of quality and speed**
 - **Speed**: Very fast inference with excellent performance
-- **Cost**: Generous free tier, low cost
+- **Cost**: Free tier available with usage limits (see [limits page](https://console.groq.com/dashboard/limits)), low cost for additional usage
 - **Quality**: Exceptional results for commit message generation
 - **Setup**: `export GROQ_API_KEY="your_key_here"`
 
-> **💡 Recommendation**: The default Llama 3.3 70B Versatile model via Groq provides the best combination of speed, quality, and cost-effectiveness for commit message generation. Highly recommended for daily use!
+> **Recommendation**: The default Llama 3.3 70B Versatile model via Groq provides the best combination of speed, quality, and cost-effectiveness for commit message generation. Highly recommended for daily use!
 
 ### Anthropic Claude (Premium Quality)  
 - **Models**: Claude 4 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku, Claude 3 Opus
@@ -126,7 +126,7 @@ convcom --model llama-3.3-70b-versatile    # Groq (recommended)
 convcom --model claude-sonnet-4-20250514   # Latest Claude 4 Sonnet
 ```
 
-## 💡 Integration Ideas
+## Integration Ideas
 
 **Git Alias (Recommended)**
 ```bash
@@ -145,7 +145,7 @@ aicommit() {
 }
 ```
 
-## 🔍 How It Works
+## How It Works
 
 1. **Change Detection**: Analyzes staged Git changes using `git2` library
 2. **Smart Processing**: 
@@ -155,7 +155,7 @@ aicommit() {
 3. **AI Analysis**: Sends structured diff to Groq's language model with optimized prompts
 4. **Message Generation**: Creates properly formatted commit message with type, scope, description, and detailed body
 
-## 🛠️ Development
+## Development
 
 ```bash
 # Clone and setup
@@ -172,13 +172,13 @@ cargo run --quiet
 cargo build --release
 ```
 
-## 📋 Requirements
+## Requirements
 
 - **Rust**: 1.70+ (2021 edition)
 - **Git**: Any recent version
-- **Groq API Key**: Free at [console.groq.com](https://console.groq.com)
+- **Groq API Key**: Available at [console.groq.com](https://console.groq.com) (free tier with limits)
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 **Clean Output for Copy/Paste**: After global installation, `convcom` produces only the commit message without build logs.
 
@@ -187,20 +187,12 @@ cargo build --release
 - "GROQ_API_KEY not found" → Set environment variable
 - "Not in a git repository" → Run in a git repo
 
-**👉 For detailed troubleshooting, see [INSTALLATION.md](INSTALLATION.md)**
+**For detailed troubleshooting, see [INSTALLATION.md](INSTALLATION.md)**
 
-## 🚀 Key Improvements Over Python Version
-
-- **⚡ Performance**: Native Rust with async HTTP client (no subprocess overhead)
-- **🛡️ Type Safety**: All models, requests, and responses are strongly typed
-- **🔄 Better Error Handling**: Structured errors with context and automatic conversions  
-- **📦 Single Binary**: No Python runtime dependency, easy distribution
-- **🌐 Cross-Platform**: Native support for Windows, macOS, and Linux
-
-## 📄 License
+## License
 
 This project is maintained by Thomas Oppelt (info@deepagents.ai).
 
 ---
 
-**🤖 Transform your commit messages with AI-powered conventional commits!**
+**Transform your commit messages with AI-powered conventional commits!**
