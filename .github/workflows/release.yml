@@ -84,19 +84,19 @@ jobs:
         with:
           name: ConvCom ${{ github.ref_name }}
           body: |
-            ## 🚀 ConvCom Release ${{ github.ref_name }}
+            ## ConvCom Release ${{ github.ref_name }}
             
             AI-powered conventional commit message generator written in Rust.
             
-            ## 📦 Installation Options
+            ## Installation Options
             
             ### Quick Install (Recommended)
             Choose the appropriate binary for your platform:
             
-            - **🐧 Linux**: `convcom-linux-x86_64.tar.gz`
-            - **🪟 Windows**: `convcom-windows-x86_64.exe.zip`
-            - **🍎 macOS (Intel)**: `convcom-macos-x86_64.tar.gz`
-            - **🍎 macOS (Apple Silicon)**: `convcom-macos-aarch64.tar.gz`
+            - **Linux**: `convcom-linux-x86_64.tar.gz`
+            - **Windows**: `convcom-windows-x86_64.exe.zip`
+            - **macOS (Intel)**: `convcom-macos-x86_64.tar.gz`
+            - **macOS (Apple Silicon)**: `convcom-macos-aarch64.tar.gz`
             
             ### Installation Steps
             
@@ -120,7 +120,7 @@ jobs:
             # Or run directly from the extracted location
             ```
             
-            ## ⚡ Quick Start
+            ## Quick Start
             
             ```bash
             # Set up your API key (choose one)
@@ -132,11 +132,11 @@ jobs:
             convcom
             ```
             
-            ## 🔗 Links
+            ## Links
             
-            - **📖 Full Documentation**: [README.md](https://github.com/${{ github.repository }}/blob/main/README.md)
-            - **⚙️ Installation Guide**: [INSTALLATION.md](https://github.com/${{ github.repository }}/blob/main/INSTALLATION.md)
-            - **🐛 Report Issues**: [GitHub Issues](https://github.com/${{ github.repository }}/issues)
+            - **Full Documentation**: [README.md](https://github.com/${{ github.repository }}/blob/main/README.md)
+            - **Installation Guide**: [INSTALLATION.md](https://github.com/${{ github.repository }}/blob/main/INSTALLATION.md)
+            - **Report Issues**: [GitHub Issues](https://github.com/${{ github.repository }}/issues)
             
             ---
             

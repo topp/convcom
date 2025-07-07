@@ -2,6 +2,11 @@
 name = "convcom"
 version = "0.1.0"
 edition = "2021"
+description = "AI-powered conventional commit message generator using Groq and Anthropic APIs"
+keywords = ["git", "commit", "ai", "conventional-commits", "groq"]
+categories = ["command-line-utilities", "development-tools"]
+repository = "https://github.com/topp/convcom"
+license = "MIT"
 default-run = "convcom"
 
 [dependencies]
