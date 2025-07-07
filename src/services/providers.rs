@@ -1,5 +1,5 @@
 use crate::error::{ConvComError, Result};
-use crate::models::ai::{ChatMessage, ChatCompletionRequest, ChatCompletionResponse};
+use crate::models::ai::{ChatCompletionRequest, ChatCompletionResponse, ChatMessage};
 use crate::models::providers::{AiProvider, ModelName};
 use async_trait::async_trait;
 use regex::Regex;
@@ -33,7 +33,7 @@ impl GroqProvider {
     fn build_chat_request(&self, prompt: String, model: ModelName) -> ChatCompletionRequest {
         let messages = vec![
             ChatMessage::system(
-                "You are a helpful AI assistant that generates conventional commit messages."
+                "You are a helpful AI assistant that generates conventional commit messages.",
             ),
             ChatMessage::user(prompt),
         ];
@@ -46,9 +46,12 @@ impl GroqProvider {
         }
     }
 
-    async fn make_groq_request(&self, request: ChatCompletionRequest) -> Result<ChatCompletionResponse> {
+    async fn make_groq_request(
+        &self,
+        request: ChatCompletionRequest,
+    ) -> Result<ChatCompletionResponse> {
         let url = "https://api.groq.com/openai/v1/chat/completions";
-        
+
         let response = self
             .client
             .post(url)
@@ -65,7 +68,7 @@ impl GroqProvider {
                 .text()
                 .await
                 .unwrap_or_else(|_| "Unknown error".to_string());
-            
+
             return Err(ConvComError::ApiError {
                 status_code: status.as_u16(),
                 message: error_text,
@@ -85,14 +88,15 @@ impl GroqProvider {
 impl AiProviderTrait for GroqProvider {
     async fn generate_message(&self, prompt: String, model: ModelName) -> Result<String> {
         if model.provider() != AiProvider::Groq {
-            return Err(ConvComError::ConfigError(
-                format!("Model {} is not supported by Groq provider", model)
-            ));
+            return Err(ConvComError::ConfigError(format!(
+                "Model {} is not supported by Groq provider",
+                model
+            )));
         }
 
         let request = self.build_chat_request(prompt, model);
         let response = self.make_groq_request(request).await?;
-        
+
         let raw_output = response
             .choices
             .into_iter()
@@ -107,10 +111,10 @@ impl AiProviderTrait for GroqProvider {
         // Remove thinking tags (similar to Python's regex)
         let thinking_regex = Regex::new(r"(?s)<think>.*?</think>").unwrap();
         let cleaned = thinking_regex.replace_all(raw_output, "");
-        
+
         // Remove any remaining thinking tags
         let cleaned = cleaned.replace("<think>", "").replace("</think>", "");
-        
+
         // Trim leading whitespace
         cleaned.trim_start().to_string()
     }
@@ -134,7 +138,7 @@ impl AnthropicProvider {
 
     async fn make_anthropic_request(&self, prompt: String, model: ModelName) -> Result<String> {
         let url = "https://api.anthropic.com/v1/messages";
-        
+
         let request_body = json!({
             "model": model.as_str(),
             "max_tokens": 1024,
@@ -165,7 +169,7 @@ impl AnthropicProvider {
                 .text()
                 .await
                 .unwrap_or_else(|_| "Unknown error".to_string());
-            
+
             return Err(ConvComError::ApiError {
                 status_code: status.as_u16(),
                 message: error_text,
@@ -194,9 +198,10 @@ impl AnthropicProvider {
 impl AiProviderTrait for AnthropicProvider {
     async fn generate_message(&self, prompt: String, model: ModelName) -> Result<String> {
         if model.provider() != AiProvider::Anthropic {
-            return Err(ConvComError::ConfigError(
-                format!("Model {} is not supported by Anthropic provider", model)
-            ));
+            return Err(ConvComError::ConfigError(format!(
+                "Model {} is not supported by Anthropic provider",
+                model
+            )));
         }
 
         let raw_output = self.make_anthropic_request(prompt, model).await?;
@@ -207,10 +212,10 @@ impl AiProviderTrait for AnthropicProvider {
         // Remove thinking tags (similar to Python's regex)
         let thinking_regex = Regex::new(r"(?s)<thinking>.*?</thinking>").unwrap();
         let cleaned = thinking_regex.replace_all(raw_output, "");
-        
+
         // Remove any remaining thinking tags
         let cleaned = cleaned.replace("<thinking>", "").replace("</thinking>", "");
-        
+
         // Trim leading whitespace
         cleaned.trim_start().to_string()
     }
@@ -258,7 +263,7 @@ mod tests {
     #[test]
     fn test_clean_output_groq() {
         let provider = GroqProvider::new("test_key".to_string()).unwrap();
-        
+
         let input = "<think>Some thoughts</think>feat: add new feature";
         let expected = "feat: add new feature";
         assert_eq!(provider.clean_output(input), expected);
@@ -267,7 +272,7 @@ mod tests {
     #[test]
     fn test_clean_output_anthropic() {
         let provider = AnthropicProvider::new("test_key".to_string()).unwrap();
-        
+
         let input = "<thinking>Some thoughts</thinking>feat: add new feature";
         let expected = "feat: add new feature";
         assert_eq!(provider.clean_output(input), expected);

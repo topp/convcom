@@ -6,7 +6,7 @@ pub enum AiProvider {
     /// Groq (default)
     #[value(name = "groq")]
     Groq,
-    
+
     /// Anthropic Claude
     #[value(name = "anthropic")]
     Anthropic,
@@ -34,67 +34,67 @@ pub enum ModelName {
     /// Allam 2 7B model (Groq)
     #[value(name = "allam-2-7b")]
     Allam27B,
-    
+
     /// Compound Beta model (Groq)
     #[value(name = "compound-beta")]
     CompoundBeta,
-    
+
     /// Compound Beta Mini model (Groq)
     #[value(name = "compound-beta-mini")]
     CompoundBetaMini,
-    
+
     /// DeepSeek R1 Distill Llama 70B (Groq)
     #[value(name = "deepseek-r1-distill-llama-70b")]
     DeepSeekR1DistillLlama70B,
-    
+
     /// Gemma2 9B Instruct model (Groq)
     #[value(name = "gemma2-9b-it")]
     Gemma29BIT,
-    
+
     /// Llama 3.1 8B Instant model (Groq)
     #[value(name = "llama-3.1-8b-instant")]
     Llama318BInstant,
-    
+
     /// Llama 3.3 70B Versatile model (Groq) (default)
     #[value(name = "llama-3.3-70b-versatile")]
     Llama3370BVersatile,
-    
+
     /// Llama3 70B 8192 context model (Groq)
     #[value(name = "llama3-70b-8192")]
     Llama370B8192,
-    
+
     /// Llama3 8B 8192 context model (Groq)
     #[value(name = "llama3-8b-8192")]
     Llama38B8192,
-    
+
     /// Meta Llama 4 Maverick 17B 128E Instruct (Groq)
     #[value(name = "meta-llama/llama-4-maverick-17b-128e-instruct")]
     MetaLlama4Maverick17B128E,
-    
+
     /// Meta Llama 4 Scout 17B 16E Instruct (Groq)
     #[value(name = "meta-llama/llama-4-scout-17b-16e-instruct")]
     MetaLlama4Scout17B16E,
-    
+
     /// Meta Llama Guard 4 12B (Groq)
     #[value(name = "meta-llama/llama-guard-4-12b")]
     MetaLlamaGuard412B,
-    
+
     /// Meta Llama Prompt Guard 2 22M (Groq)
     #[value(name = "meta-llama/llama-prompt-guard-2-22m")]
     MetaLlamaPromptGuard222M,
-    
+
     /// Meta Llama Prompt Guard 2 86M (Groq)
     #[value(name = "meta-llama/llama-prompt-guard-2-86m")]
     MetaLlamaPromptGuard286M,
-    
+
     /// Mistral Saba 24B model (Groq)
     #[value(name = "mistral-saba-24b")]
     MistralSaba24B,
-    
+
     /// Qwen QWQ 32B model (Groq)
     #[value(name = "qwen-qwq-32b")]
     QwenQWQ32B,
-    
+
     /// Qwen3 32B model (Groq)
     #[value(name = "qwen/qwen3-32b")]
     Qwen332B,
@@ -103,19 +103,19 @@ pub enum ModelName {
     /// Claude 3.5 Sonnet (Anthropic)
     #[value(name = "claude-3-5-sonnet-20241022")]
     Claude35Sonnet,
-    
+
     /// Claude 3.5 Haiku (Anthropic)
     #[value(name = "claude-3-5-haiku-20241022")]
     Claude35Haiku,
-    
+
     /// Claude 3 Opus (Anthropic)
     #[value(name = "claude-3-opus-20240229")]
     Claude3Opus,
-    
+
     /// Claude 3 Sonnet (Anthropic)
     #[value(name = "claude-3-sonnet-20240229")]
     Claude3Sonnet,
-    
+
     /// Claude 3 Haiku (Anthropic)
     #[value(name = "claude-3-haiku-20240307")]
     Claude3Haiku,
@@ -147,7 +147,7 @@ impl ModelName {
             ModelName::MistralSaba24B => "mistral-saba-24b",
             ModelName::QwenQWQ32B => "qwen-qwq-32b",
             ModelName::Qwen332B => "qwen/qwen3-32b",
-            
+
             // Anthropic models
             ModelName::Claude4Sonnet => "claude-sonnet-4-20250514",
             ModelName::Claude35Sonnet => "claude-3-5-sonnet-20241022",
@@ -179,7 +179,7 @@ impl ModelName {
             | ModelName::MistralSaba24B
             | ModelName::QwenQWQ32B
             | ModelName::Qwen332B => AiProvider::Groq,
-            
+
             // Anthropic models
             ModelName::Claude4Sonnet
             | ModelName::Claude35Sonnet

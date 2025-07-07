@@ -21,10 +21,7 @@ pub enum ConvComError {
 
     /// API returned an error response
     #[error("API error {status_code}: {message}")]
-    ApiError {
-        status_code: u16,
-        message: String,
-    },
+    ApiError { status_code: u16, message: String },
 
     /// Failed to parse API response
     #[error("Failed to parse API response: {0}")]

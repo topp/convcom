@@ -10,9 +10,8 @@ pub struct GitService {
 impl GitService {
     /// Create a new GitService by discovering the repository
     pub fn new() -> Result<Self> {
-        let repo = Repository::discover(".")
-            .map_err(|_| ConvComError::NotGitRepoError)?;
-        
+        let repo = Repository::discover(".").map_err(|_| ConvComError::NotGitRepoError)?;
+
         Ok(Self { repo })
     }
 
@@ -23,9 +22,10 @@ impl GitService {
 
         for entry in statuses.iter() {
             let status = entry.status();
-            if status.contains(Status::INDEX_NEW) 
-                || status.contains(Status::INDEX_MODIFIED) 
-                || status.contains(Status::INDEX_DELETED) {
+            if status.contains(Status::INDEX_NEW)
+                || status.contains(Status::INDEX_MODIFIED)
+                || status.contains(Status::INDEX_DELETED)
+            {
                 if let Some(path) = entry.path() {
                     staged_files.push(path.to_string());
                 }
@@ -42,7 +42,7 @@ impl GitService {
     /// Get the git status of a specific file
     pub fn get_file_status(&self, file_path: &str) -> Result<char> {
         let statuses = self.repo.statuses(None)?;
-        
+
         for entry in statuses.iter() {
             if let Some(path) = entry.path() {
                 if path == file_path {
@@ -57,7 +57,7 @@ impl GitService {
                 }
             }
         }
-        
+
         Ok('M') // Default to modified
     }
 
@@ -75,27 +75,30 @@ impl GitService {
         }
 
         // Fallback: try to read from working directory
-        std::fs::read_to_string(file_path)
-            .map_err(|_| ConvComError::IoError(format!("Could not read file content: {}", file_path)))
+        std::fs::read_to_string(file_path).map_err(|_| {
+            ConvComError::IoError(format!("Could not read file content: {}", file_path))
+        })
     }
 
     /// Extract changes from a modified file using git diff
     pub fn get_file_changes(&self, file_path: &str) -> Result<Vec<String>> {
         let mut changes = Vec::new();
-        
+
         // Get diff between HEAD and index (staged changes)
         let tree = self.repo.head()?.peel_to_tree()?;
         let diff = self.repo.diff_tree_to_index(Some(&tree), None, None)?;
-        
+
         diff.print(git2::DiffFormat::Patch, |_delta, _hunk, line| {
-            let file_matches = _delta.new_file().path()
+            let file_matches = _delta
+                .new_file()
+                .path()
                 .map(|p| p.to_str().unwrap_or("") == file_path)
                 .unwrap_or(false);
-                
+
             if file_matches {
                 let content = String::from_utf8_lossy(line.content());
                 let origin = line.origin();
-                
+
                 match origin {
                     '+' => {
                         if !content.starts_with("+++") {

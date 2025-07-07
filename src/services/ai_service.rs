@@ -1,6 +1,6 @@
+use crate::error::{ConvComError, Result};
 use crate::models::providers::{AiProvider, ModelName};
 use crate::services::providers::{create_provider, AiProviderTrait};
-use crate::error::{ConvComError, Result};
 use anyhow::Result as AnyhowResult;
 
 /// AI service for generating commit messages using multiple providers
@@ -12,22 +12,22 @@ impl AiService {
     /// Create a new AI service instance with provider support
     pub fn new(groq_api_key: Option<String>, anthropic_api_key: Option<String>) -> Result<Self> {
         let mut providers = std::collections::HashMap::new();
-        
+
         // Add Groq provider if API key is provided
         if let Some(key) = groq_api_key {
             let provider = create_provider(AiProvider::Groq, key)?;
             providers.insert(AiProvider::Groq, provider);
         }
-        
+
         // Add Anthropic provider if API key is provided
         if let Some(key) = anthropic_api_key {
             let provider = create_provider(AiProvider::Anthropic, key)?;
             providers.insert(AiProvider::Anthropic, provider);
         }
-        
+
         if providers.is_empty() {
             return Err(ConvComError::ConfigError(
-                "At least one AI provider API key must be provided".to_string()
+                "At least one AI provider API key must be provided".to_string(),
             ));
         }
 
@@ -41,13 +41,19 @@ impl AiService {
     }
 
     /// Generate a commit message using the specified model
-    pub async fn generate_commit_message(&self, prompt: String, model: ModelName) -> AnyhowResult<String> {
+    pub async fn generate_commit_message(
+        &self,
+        prompt: String,
+        model: ModelName,
+    ) -> AnyhowResult<String> {
         let provider_type = model.provider();
-        
-        let provider = self.providers.get(&provider_type)
-            .ok_or_else(|| ConvComError::ConfigError(
-                format!("Provider {} is not configured. Please provide API key for this provider.", provider_type)
-            ))?;
+
+        let provider = self.providers.get(&provider_type).ok_or_else(|| {
+            ConvComError::ConfigError(format!(
+                "Provider {} is not configured. Please provide API key for this provider.",
+                provider_type
+            ))
+        })?;
 
         let result = provider.generate_message(prompt, model).await?;
         Ok(result)
@@ -67,7 +73,7 @@ impl AiService {
     #[allow(dead_code)]
     pub fn available_models(&self) -> Vec<ModelName> {
         let mut models = Vec::new();
-        
+
         for provider_type in self.providers.keys() {
             match provider_type {
                 AiProvider::Groq => {
@@ -103,7 +109,7 @@ impl AiService {
                 }
             }
         }
-        
+
         models
     }
 }

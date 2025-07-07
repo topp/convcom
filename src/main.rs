@@ -1,5 +1,5 @@
-use clap::Parser;
 use anyhow::Result;
+use clap::Parser;
 
 mod config;
 mod error;
@@ -20,7 +20,7 @@ struct Cli {
     /// The AI model to use
     #[arg(long, value_enum, default_value_t = ModelName::default())]
     model: ModelName,
-    
+
     /// Focus message to guide AI attention
     #[arg(long, short)]
     focus: Option<String>,
@@ -29,7 +29,7 @@ struct Cli {
 #[tokio::main]
 async fn main() -> Result<()> {
     let cli = Cli::parse();
-    
+
     // Load configuration
     let config = match Config::load() {
         Ok(config) => config,
@@ -60,10 +60,16 @@ async fn main() -> Result<()> {
 
     // Validate that the selected model is available
     if !ai_service.has_provider(cli.model.provider()) {
-        eprintln!("Error: Model '{}' requires {} provider, but no API key is configured.", 
-                  cli.model, cli.model.provider());
+        eprintln!(
+            "Error: Model '{}' requires {} provider, but no API key is configured.",
+            cli.model,
+            cli.model.provider()
+        );
         eprintln!();
-        eprintln!("Available providers: {:?}", ai_service.available_providers());
+        eprintln!(
+            "Available providers: {:?}",
+            ai_service.available_providers()
+        );
         eprintln!("Configure the required API key or choose a different model.");
         std::process::exit(1);
     }
