@@ -1,0 +1,42 @@
+[package]
+name = "convcom"
+version = "0.1.0"
+edition = "2021"
+default-run = "convcom"
+
+[dependencies]
+# CLI framework
+clap = { version = "4.4", features = ["derive"] }
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# HTTP client for AI API calls (using rustls to avoid OpenSSL issues)
+reqwest = { version = "0.11", features = ["json", "rustls-tls"], default-features = false }
+
+# Async traits
+async-trait = "0.1"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Environment variables
+dotenvy = "0.15"
+
+# Configuration directories
+dirs = "5.0"
+
+# Git operations (local operations only, no HTTPS to avoid OpenSSL)
+git2 = { version = "0.18", default-features = false }
+
+# Regular expressions for output cleaning
+regex = "1.10"
+
+[dev-dependencies]
+tokio-test = "0.4"
+mockito = "1.2"

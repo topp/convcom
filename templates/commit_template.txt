@@ -1,0 +1,135 @@
+<<CONVENTIONAL COMMITS v1.0.0 FORMAL SPECIFICATION START>>
+
+## Specification
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.
+
+1. Commits MUST be prefixed with a type, which consists of a noun, feat, fix, etc., followed by the OPTIONAL scope, OPTIONAL !, and REQUIRED terminal colon and space.
+2. The type feat MUST be used when a commit adds a new feature to your application or library.
+3. The type fix MUST be used when a commit represents a bug fix for your application.
+4. A scope MAY be provided after a type. A scope MUST consist of a noun describing a section of the codebase surrounded by parenthesis, e.g., fix(parser):
+5. A description MUST immediately follow the colon and space after the type/scope prefix. The description is a short summary of the code changes, e.g., fix: array parsing issue when multiple spaces were contained in string.
+6. A longer commit body MAY be provided after the short description, providing additional contextual information about the code changes. The body MUST begin one blank line after the description.
+7. A commit body is free-form and MAY consist of any number of newline separated paragraphs.
+8. One or more footers MAY be provided one blank line after the body. Each footer MUST consist of a word token, followed by either a :<space> or <space># separator, followed by a string value (this is inspired by the git trailer convention).
+9. A footer's token MUST use - in place of whitespace characters, e.g., Acked-by (this helps differentiate the footer section from a multi-paragraph body). An exception is made for BREAKING CHANGE, which MAY also be used as a token.
+10. A footer's value MAY contain spaces and newlines, and parsing MUST terminate when the next valid footer token/separator pair is observed.
+11. Breaking changes MUST be indicated in the type/scope prefix of a commit, or as an entry in the footer.
+12. If included as a footer, a breaking change MUST consist of the uppercase text BREAKING CHANGE, followed by a colon, space, and description, e.g., BREAKING CHANGE: environment variables now take precedence over config files.
+13. If included in the type/scope prefix, breaking changes MUST be indicated by a ! immediately before the :. If ! is used, BREAKING CHANGE: MAY be omitted from the footer section, and the commit description SHALL be used to describe the breaking change.
+14. Types other than feat and fix MAY be used in your commit messages, e.g., docs: update ref docs.
+15. The units of information that make up Conventional Commits MUST NOT be treated as case sensitive by implementors, with the exception of BREAKING CHANGE which MUST be uppercase.
+16. BREAKING-CHANGE MUST be synonymous with BREAKING CHANGE, when used as a token in a footer.
+
+## Common Types (Beyond feat/fix)
+- `build:` Changes that affect the build system or external dependencies
+- `ci:` Changes to CI configuration files and scripts
+- `docs:` Documentation only changes
+- `perf:` Code changes that improve performance
+- `refactor:` Code changes that neither fix a bug nor add a feature
+- `style:` Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- `test:` Adding missing tests or correcting existing tests
+- `chore:` Other changes that don't modify src or test files
+
+## Format Requirements
+
+**Structure MUST follow:**
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+**Valid Examples:**
+- `feat: allow provided config object to extend other configs`
+- `feat(scope): allow provided config object to extend other configs`
+- `feat!: send an email to the customer when a product is shipped`
+- `feat(api)!: send an email to the customer when a product is shipped`
+- `fix: prevent racing of requests`
+- `docs: correct spelling of CHANGELOG`
+
+<<CONVENTIONAL COMMITS v1.0.0 FORMAL SPECIFICATION END>>
+
+$focus_section<<GIT_DIFF_START>>
+$diff_content
+<<GIT_DIFF_END>>
+
+### GIT DIFF FORMAT - READ THIS FIRST!
+
+THIS IS CRITICAL: In git diff output, the meaning of "+" and "-" is:
+- "-" (minus) at the beginning of a line means: This line was REMOVED from the file
+- "+" (plus) at the beginning of a line means: This line was ADDED to the file
+
+Example interpretation:
+```
+MODIFIED: example.py
+- import os  
++ import sys
+```
+This means: The "import os" line was REMOVED and "import sys" line was ADDED
+
+If you see:
+```
+MODIFIED: core.py
+- from module import Class
+```
+It means the import statement "from module import Class" was REMOVED from the file.
+
+### HANDLING MULTI-FILE DIFFS:
+
+IMPORTANT: Examine each file's changes INDIVIDUALLY. Do not mix up what was removed vs. added across different files.
+
+Example of multi-file diff:
+```
+MODIFIED: file1.py
+- import A
++ import B
+
+MODIFIED: file2.py  
+- import C
+```
+Correct interpretation: In file1.py, import A was REMOVED and import B was ADDED. In file2.py, import C was REMOVED.
+
+INCORRECT interpretation would be saying "Added imports for modules A, B, and C" - this is wrong because A and C were removed!
+
+### CRITICAL COMPLIANCE REQUIREMENTS:
+
+**MUST REQUIREMENTS (Non-negotiable):**
+1. MUST prefix with type followed by colon and space: `type: description`
+2. MUST use lowercase for type (except BREAKING CHANGE which MUST be uppercase)
+3. MUST provide description immediately after colon and space
+4. MUST use feat for new features
+5. MUST use fix for bug fixes
+6. MUST use ! before colon for breaking changes: `feat!:` or `fix(scope)!:`
+7. MUST begin body one blank line after description (if body is provided)
+8. MUST use BREAKING CHANGE: in footer for breaking changes (if not using !)
+
+**FORMAT COMPLIANCE:**
+- ✅ REQUIRED: `<type>: <description>`
+- ✅ OPTIONAL: `<type>(scope): <description>`
+- ✅ BREAKING: `<type>!: <description>` OR `<type>(scope)!: <description>`
+
+### VERY VERY IMPORTANT Instructions:
+- **NEVER** wrap the output in any additional formatting like tags or ```(backticks)**
+- **NEVER** explain, comment, or suggest improvements in your answer.
+- **NEVER** check if the code is correct or if it works, it IS already tested and correct in Python 3.12.
+- Generate a **concise but comprehensive** commit message reflecting the meaningful changes in the DIFF section.
+- For understanding **carefully check any inline comments in the code**
+- Focus on key functionality changes, architectural modifications, and the purpose of new files.
+- Group related changes together rather than listing each file separately.
+- Output **only** a Conventional Commit message following v1.0.0 specification
+- **ALWAYS** provide the bullet-list body with key changes organized by functionality, not just files changed.
+
+### OUTPUT FORMAT REQUIREMENTS:
+1. VERY IMPORTANT: Output **ONLY** a formatted conventional commit message, nothing else!!!
+2. A one-line header following EXACT specification: `<type>[optional scope]: <description>`
+3. Blank line
+4. A **mandatory** bullet-list body with key changes organized by functionality, not just files changed$focus_reminder. Each sentence MUST end with a period.
+5. **Do NOT include any additional explanations or comments in the output**
+6. **Do NOT wrap the output in any additional formatting or tags or backticks**
+7. When a footer is used: you MUST separate it with a blank line after the body
+8. Footer information MUST be separated by linebreaks and follow the format: `<token>: <value>` or `<token> #<value>`
+
+### Commit message:
