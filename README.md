@@ -174,7 +174,7 @@ cargo build --release
 
 ## Requirements
 
-- **Rust**: 1.70+ (2021 edition)
+- **Rust**: 1.88+ (2024 edition)
 - **Git**: Any recent version
 - **Groq API Key**: Available at [console.groq.com](https://console.groq.com) (free tier with limits)
 
